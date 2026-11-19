@@ -1,0 +1,932 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Богатырь · тренажёрный зал в центре Перми, old school gym</title>
+<meta name="description" content="Тренажёрный зал «Богатырь» на Петропавловской, 81 в Перми: камерный зал без очередей к тренажёрам, сауна и душ, тренеры рядом. Пробное посещение 350 ₽, разовое 600 ₽.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Богатырь">
+<meta property="og:title" content="Богатырь · тренажёрный зал в центре Перми">
+<meta property="og:description" content="Камерный зал на Петропавловской, 81: сауна и душ, тренеры рядом, абонементы от 2 700 ₽. Пробное посещение 350 ₽.">
+<meta property="og:url" content="http://localhost:4600/bogatyr-demo/">
+<meta property="og:image" content="http://localhost:4600/bogatyr-demo/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" href="assets/hero-m.webp" media="(max-width: 860px)" fetchpriority="high">
+<link rel="preload" as="image" href="assets/hero.webp" media="(min-width: 861px)" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%23b5231f%27/%3E%3Crect x=%277%27 y=%2711%27 width=%274%27 height=%2710%27 rx=%271%27 fill=%27%23fff6ee%27/%3E%3Crect x=%2721%27 y=%2711%27 width=%274%27 height=%2710%27 rx=%271%27 fill=%27%23fff6ee%27/%3E%3Crect x=%2711%27 y=%2714.8%27 width=%2710%27 height=%272.4%27 fill=%27%23fff6ee%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="vibe.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HealthClub","name":"Богатырь","description":"Тренажёрный зал в центре Перми: камерный зал без очередей к тренажёрам, сауна и душ, тренеры рядом, абонементы и разовые посещения.","url":"http://localhost:4600/bogatyr-demo/","image":"http://localhost:4600/bogatyr-demo/assets/og.jpg","telephone":"+79954811710","openingHours":"Mo-Su 07:00-22:00","address":{"@type":"PostalAddress","streetAddress":"Петропавловская, 81","addressLocality":"Пермь","addressCountry":"RU"},"priceRange":"от 350 ₽"}
+</script>
+<style>
+  /* ---- тема: шесть цветов, два шрифта (палитра А «Мел + лайм») ---------- */
+  .v-page {
+    --v-canvas: #f1ece2; --v-surface: #fffdf9;
+    --v-ink: #1a1410; --v-ink-soft: #6b6157;
+    --v-accent: #b5231f; --v-accent-ink: #fff6ee;
+    --v-accent-deep: #8d1a17;
+    --v-font-display: "Unbounded", "Arial Black", system-ui, sans-serif;
+    --v-font-text: "Onest", "Segoe UI", system-ui, sans-serif;
+    --v-shadow-color: 41 30 24;
+    --v-radius: 14px;
+    --v-display-weight: 600;
+    --v-section: clamp(2.5rem, 5.5vw, 4.75rem);
+    --v-track-tight: -0.01em;
+    --v-canvas-88: color-mix(in oklab, var(--v-canvas) 88%, transparent);
+    --v-accent-14: color-mix(in oklab, var(--v-accent) 14%, transparent);
+    --v-accent-32: color-mix(in oklab, var(--v-accent) 32%, transparent);
+    --v-surface-tint: color-mix(in oklab, var(--v-surface) 86%, var(--v-accent));
+  }
+  html, body { background: #f1ece2; }
+  .v-page .v-display { line-height: 1.06; letter-spacing: .005em; }
+  .v-page .v-display--lg, .v-page .v-display--md { text-transform: none; }
+  .v-page .v-display--xl { line-height: 1.02; }
+  .v-page .v-lede { font-weight: 400; }
+  .v-page .v-label { font-weight: 600; }
+  .v-page .v-btn { font-size: var(--v-t-base); font-weight: 600; box-shadow: var(--v-e1), inset 0 0 0 1px color-mix(in oklab, var(--v-accent-ink) 12%, transparent); }
+  .v-page h3 { font-weight: 600; }
+  .v-page .v-label--accent { color: var(--v-accent-deep); }
+
+  /* ---- шапка -------------------------------------------------------------- */
+  .bar { position: fixed; inset: 0 0 auto 0; z-index: 30; display: flex; align-items: center; justify-content: space-between;
+    padding: var(--v-3) var(--v-gutter); gap: var(--v-4);
+    background: linear-gradient(to bottom, var(--v-canvas-88), transparent);
+    transition: background-color .3s var(--v-ease-out), box-shadow .3s var(--v-ease-out); }
+  .bar.is-scrolled { background: var(--v-canvas-88); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 1px 0 var(--v-hair); }
+  .bar__mark { font-family: var(--v-font-display); font-weight: 600; font-size: var(--v-t-base); letter-spacing: -.01em; text-decoration: none;
+    display: inline-flex; align-items: center; gap: .5em; min-height: 44px; white-space: nowrap; }
+  .bar__mark i { width: 1.35em; height: 1.35em; border-radius: 50%; background: var(--v-accent); display: inline-grid; place-items: center; }
+  .bar__mark i::before { content: ""; width: .7em; height: .18em; background: var(--v-accent-ink); border-radius: 1px;
+    box-shadow: -.28em -.16em 0 -.02em var(--v-accent-ink), .28em -.16em 0 -.02em var(--v-accent-ink), -.28em .16em 0 -.02em var(--v-accent-ink), .28em .16em 0 -.02em var(--v-accent-ink); }
+  .bar__right { display: flex; align-items: center; gap: var(--v-4); }
+  .bar__tel { text-decoration: none; font-weight: 600; font-size: var(--v-t-sm); color: var(--v-ink); display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--v-2); }
+  @media (max-width: 700px) {
+    .bar__tel { display: none; }
+    .bar .v-btn { padding: 0 1em; min-height: 44px; font-size: .95rem; }
+    .bar__right { gap: var(--v-2); }
+    .bar__mark { font-size: .95rem; }
+  }
+  /* узкий телефон: кнопка шапки целиком в экране (знак без кружка, на самых узких поля шапки 16 px) */
+  @media (max-width: 430px) { .bar { gap: var(--v-2); } .bar__mark { font-size: .8rem; } .bar__mark i { display: none; } .bar .v-btn { padding: 0 .7em; } }
+  @media (max-width: 380px) { .bar { padding-inline: 16px; } }
+  @media (max-width: 370px) { .bar__mark { font-size: .72rem; } }
+  @media (max-width: 860px) { .bar.is-scrolled { background: color-mix(in oklab, var(--v-canvas) 96%, transparent); } }
+
+  /* ---- hero: групповая тренировка в светлом зале с зеркальной стеной ---------- */
+  .hero__back img { position: absolute; max-width: none; width: 108%; height: 108%; left: -4%; top: 3%; object-fit: cover; object-position: left top; }
+  .hero__col { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background: linear-gradient(to right, rgb(241 236 226 / .95) 0%, rgb(241 236 226 / .78) 32%, rgb(241 236 226 / .28) 48%, transparent 62%); }
+  .hero__copy { bottom: clamp(4.5rem, 13vh, 9rem); max-width: min(48rem, 62vw); }
+  .hero__label { display: block; margin-bottom: var(--v-4); }
+  .hero__copy .v-display { font-size: clamp(2.2rem, 1.2rem + 3.2vw, 4rem); }
+  .hero__copy .v-lede { margin-top: var(--v-5); max-width: 44ch; font-size: clamp(1.05rem, .95rem + .5vw, 1.35rem); }
+  .hero__cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--v-4) var(--v-6); margin-top: var(--v-6); }
+  .hero__tel { text-decoration: none; color: var(--v-ink); font-size: var(--v-t-sm); display: inline-flex; align-items: center; min-height: 44px; gap: .35em; }
+  .hero__tel b { font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em; }
+  .hero__note { position: absolute; z-index: 3; right: var(--v-gutter); bottom: clamp(4.5rem, 13vh, 9rem); text-align: right; display: grid; gap: .25em; font-size: var(--v-t-sm); color: var(--v-ink);
+    padding: var(--v-4) var(--v-5); border-radius: var(--v-radius); background: color-mix(in oklab, var(--v-surface) 78%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: var(--v-e1); }
+  .hero__note .v-nums { font-family: var(--v-font-display); font-weight: 600; font-size: var(--v-t-lg); letter-spacing: -.01em; }
+  @media (max-width: 860px) {
+    /* телефон: верх сцены – холст с текстом, фото занимает нижние 72 % и сшивается с холстом по белой стене */
+    .hero__back { inset: auto 0 0 0; height: 72%; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%); mask-image: linear-gradient(to bottom, transparent, #000 14%); }
+    .hero__back img { width: 100%; height: 100%; left: 0; top: 0; object-position: center bottom; }
+    .hero__col { background: linear-gradient(to bottom, var(--v-canvas) 0%, var(--v-canvas) 28%, transparent 46%); }
+    .v-page .hero__copy { top: 4.6rem; bottom: auto; max-width: none; }
+    .hero__copy .v-display { font-size: clamp(1.7rem, 1rem + 4.2vw, 2.4rem); }
+    .hero__copy .v-lede { font-size: var(--v-t-base); margin-top: var(--v-3); max-width: 36ch; }
+    .hero__label { margin-bottom: var(--v-3); }
+    .hero__cta { margin-top: var(--v-4); gap: var(--v-2) var(--v-5); }
+    .hero__note { display: none; }
+  }
+  @media (max-width: 600px) and (max-height: 700px) { .hero__back { height: 64%; } .hero__copy .v-lede { display: none; } }
+
+  /* ---- знакомо: строки боли, поворот, широкий кадр со шторкой ------------- */
+  .poka__head { display: grid; gap: var(--v-3); margin-bottom: var(--v-6); max-width: 52rem; }
+  .poka__grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: var(--v-9); align-items: start; margin-bottom: var(--v-7); }
+  .rows li { padding: var(--v-5) 0; border-top: 1px solid var(--v-hair); display: grid; gap: var(--v-1); }
+  .rows li:last-child { border-bottom: 1px solid var(--v-hair); }
+  .rows h3 { font-family: var(--v-font-display); font-weight: 500; font-size: var(--v-t-lg); letter-spacing: -.01em; line-height: 1.2; }
+  .rows p { color: var(--v-ink-soft); max-width: 46ch; text-wrap: pretty; }
+  .turn { position: sticky; top: clamp(5rem, 12vh, 7rem); padding: var(--v-6); border-radius: var(--v-radius); background: var(--v-surface); box-shadow: var(--v-e2), var(--v-edge); display: grid; gap: var(--v-3); }
+  .turn__text { font-size: var(--v-t-lg); line-height: 1.35; text-wrap: pretty; }
+  .turn__text b { font-weight: 600; }
+  .poka__fig { position: relative; aspect-ratio: 2.3 / 1; border-radius: var(--v-radius); overflow: hidden; box-shadow: var(--v-e2), var(--v-edge); }
+  .poka__fig img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+  .poka__fig figcaption { position: absolute; left: var(--v-5); bottom: var(--v-5); z-index: 1; font-size: var(--v-t-sm); color: var(--v-ink); max-width: 34ch;
+    padding: var(--v-3) var(--v-4); border-radius: calc(var(--v-radius) - 6px); background: color-mix(in oklab, var(--v-surface) 82%, transparent); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  @media (max-width: 860px) {
+    .poka__grid { grid-template-columns: 1fr; gap: var(--v-6); margin-bottom: var(--v-7); }
+    .turn { position: static; padding: var(--v-5); }
+    .poka__fig { aspect-ratio: 4 / 3; }
+    .poka__fig img { object-position: 80% center; }
+    .poka__fig figcaption { left: var(--v-4); right: var(--v-4); bottom: var(--v-4); max-width: none; }
+  }
+
+  /* ---- как проходит первая: фото слева, шаги вдоль линии справа ------------ */
+  .first { display: grid; grid-template-columns: .7fr 1.3fr; gap: var(--v-9); align-items: start; }
+  .first__fig { position: sticky; top: clamp(5rem, 12vh, 7rem); aspect-ratio: 3 / 4; border-radius: var(--v-radius); overflow: hidden; box-shadow: var(--v-e2), var(--v-edge); }
+  .first__fig > div { position: absolute; inset: -8% 0; will-change: transform; }
+  .first__fig img { width: 100%; height: 100%; object-fit: cover; object-position: center 45%; }
+  .first__fig figcaption { position: absolute; left: var(--v-4); right: var(--v-4); bottom: var(--v-4); z-index: 1; font-size: var(--v-t-sm); color: var(--v-ink);
+    padding: var(--v-3) var(--v-4); border-radius: calc(var(--v-radius) - 6px); background: color-mix(in oklab, var(--v-surface) 82%, transparent); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  .first__copy { display: grid; gap: var(--v-5); }
+  .first__copy .v-lede { max-width: 46ch; }
+  .steps { display: grid; gap: 0; position: relative; margin-top: var(--v-3); }
+  .steps li { position: relative; display: grid; grid-template-columns: 2.6rem 1fr; gap: var(--v-4); padding: var(--v-4) 0; border-top: 1px solid var(--v-hair); }
+  .steps li:last-child { border-bottom: 1px solid var(--v-hair); }
+  .steps__n { width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center; background: var(--v-accent); color: var(--v-accent-ink);
+    font-family: var(--v-font-display); font-weight: 600; font-size: var(--v-t-sm); box-shadow: var(--v-e1); }
+  .steps li:last-child .steps__n { background: var(--v-ink); color: var(--v-canvas); }
+  .steps h3 { font-family: var(--v-font-display); font-weight: 500; font-size: var(--v-t-lg); letter-spacing: -.01em; line-height: 1.2; text-wrap: balance; }
+  .steps p { color: var(--v-ink-soft); max-width: 50ch; text-wrap: pretty; margin-top: var(--v-1); }
+  .first__note { font-size: var(--v-t-sm); color: var(--v-ink-soft); max-width: 56ch; }
+  .first__note b { color: var(--v-ink); font-weight: 600; }
+  @media (max-width: 860px) {
+    .first { grid-template-columns: 1fr; gap: var(--v-6); }
+    .first__fig { position: relative; top: auto; aspect-ratio: 4 / 3; }
+    .first__fig img { object-position: center 88%; }
+    .steps li { grid-template-columns: 2.2rem 1fr; gap: var(--v-3); padding: var(--v-4) 0; }
+    .steps__n { width: 2.2rem; height: 2.2rem; }
+  }
+
+  /* ---- фирменный ход: карточки учеников переворачиваются «до → после» ------- */
+  .ba { --p: var(--v-p, 0); height: 100%; display: grid; grid-template-columns: .9fr 1.1fr; gap: var(--v-8); align-items: center;
+    padding: clamp(4.5rem, 11vh, 6.5rem) var(--v-gutter) clamp(1.5rem, 4vh, 3rem); }
+  .ba__copy { display: grid; gap: var(--v-4); max-width: 34rem; }
+  .ba__copy .v-display--md { font-size: clamp(1.8rem, 1.2rem + 2vw, 3rem); }
+  .ba__copy .v-body { max-width: 44ch; }
+  .ba__legend { display: flex; align-items: center; gap: var(--v-3); font-size: var(--v-t-sm); color: var(--v-ink-soft); margin-top: var(--v-2); }
+  .ba__legend i { width: 2.2rem; height: .3rem; border-radius: 999px; background: linear-gradient(to right, var(--v-hair-strong) 50%, var(--v-accent) 50%); }
+  .ba__cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--v-5); align-items: start; }
+  .card { perspective: 1400px; display: grid; gap: var(--v-3); }
+  .card__in { position: relative; aspect-ratio: 3 / 4; transform-style: preserve-3d; will-change: transform;
+    transform: rotateY(calc(180deg * var(--f))); }
+  .card:nth-child(1) .card__in { --f: clamp(0, (var(--p) - .12) / .2, 1); }
+  .card:nth-child(2) .card__in { --f: clamp(0, (var(--p) - .4) / .2, 1); }
+  .card:nth-child(3) .card__in { --f: clamp(0, (var(--p) - .68) / .2, 1); }
+  .card:nth-child(1) .card__state { --f: clamp(0, (var(--p) - .12) / .2, 1); }
+  .card:nth-child(2) .card__state { --f: clamp(0, (var(--p) - .4) / .2, 1); }
+  .card:nth-child(3) .card__state { --f: clamp(0, (var(--p) - .68) / .2, 1); }
+  .face { position: absolute; inset: 0; border-radius: var(--v-radius); overflow: hidden; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+    background: var(--v-surface); box-shadow: var(--v-e2), var(--v-edge); display: grid; place-items: center; }
+  .face img { width: 100%; height: 100%; object-fit: cover; }
+  .face--post { transform: rotateY(180deg); background: var(--v-surface-tint); }
+  .face--post::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 3px var(--v-accent); pointer-events: none; }
+  .card__cap { display: grid; gap: .15em; font-size: var(--v-t-sm); color: var(--v-ink-soft); }
+  .card__cap b { color: var(--v-ink); font-weight: 600; }
+  .card__state { position: relative; height: 1.4em; font-family: var(--v-font-display); font-weight: 500; font-size: var(--v-t-xs); letter-spacing: .06em; text-transform: uppercase; }
+  .card__state span { position: absolute; left: 0; top: 0; }
+  .card__state span:first-child { opacity: clamp(0, 1 - 2 * var(--f), 1); }
+  .card__state span:last-child { opacity: clamp(0, 2 * var(--f) - 1, 1); color: var(--v-accent-deep); }
+  .ba__note { grid-column: 1 / -1; font-size: var(--v-t-sm); color: var(--v-ink-soft); max-width: 62ch; }
+  @media (max-width: 860px) {
+    .ba { grid-template-columns: 1fr; grid-template-rows: auto auto auto; align-content: start; align-items: start; gap: var(--v-5); padding-top: 4.6rem; }
+    .ba__copy { gap: var(--v-2); }
+    .ba__copy .v-display--md { font-size: var(--v-t-xl); }
+    .ba__cards { gap: var(--v-3); }
+    .card { gap: var(--v-2); }
+    .face { border-radius: 12px; }
+    .face--post::after { box-shadow: inset 0 0 0 2px var(--v-accent); }
+    .card__cap { font-size: .95rem; }
+    .card__state { font-size: .95rem; }
+    .ba__note { font-size: .95rem; }
+  }
+  @media (max-width: 600px) and (max-height: 760px) { .ba__copy .v-body { display: none; } .ba__note { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .v-page .card__in, .v-page .card__state { --f: 1; } }
+
+  /* ---- форматы и цены: строки и карточка «что входит» с фото зала ----------- */
+  .prices { display: grid; grid-template-columns: 1.3fr .8fr; gap: var(--v-9); align-items: start; }
+  .plist li { display: grid; grid-template-columns: 1fr auto; gap: var(--v-1) var(--v-5); padding: var(--v-4) 0; border-top: 1px solid var(--v-hair); align-items: baseline; }
+  .plist li:last-child { border-bottom: 1px solid var(--v-hair); }
+  .plist .name { font-family: var(--v-font-display); font-weight: 500; font-size: var(--v-t-lg); letter-spacing: -.01em; line-height: 1.2; }
+  .plist .note { grid-column: 1; font-size: var(--v-t-sm); color: var(--v-ink-soft); max-width: 46ch; }
+  .plist .price { grid-column: 2; grid-row: 1 / span 2; align-self: start; font-weight: 600; font-size: var(--v-t-base); color: var(--v-accent-deep); white-space: nowrap; }
+  .plist li.is-trial .name { color: var(--v-accent-deep); }
+  .prices__incl { font-size: var(--v-t-sm); color: var(--v-ink-soft); max-width: 62ch; }
+  .prices__incl b { color: var(--v-ink); font-weight: 600; }
+  .prices__aside { position: sticky; top: clamp(5rem, 12vh, 7rem); }
+  .incl { border-radius: var(--v-radius); background: var(--v-surface); box-shadow: var(--v-e2), var(--v-edge); overflow: hidden; display: grid; }
+  .incl__fig { position: relative; aspect-ratio: 16 / 10; }
+  .incl__fig img { width: 100%; height: 100%; object-fit: cover; object-position: center 60%; }
+  .incl__fig figcaption { position: absolute; left: var(--v-4); bottom: var(--v-4); font-size: var(--v-t-xs); letter-spacing: var(--v-track-wide); text-transform: uppercase; color: var(--v-ink);
+    padding: .4em .8em; border-radius: 999px; background: color-mix(in oklab, var(--v-surface) 85%, transparent); }
+  .incl__body { padding: var(--v-5) var(--v-6) var(--v-6); display: grid; gap: var(--v-3); }
+  .incl li { padding: var(--v-3) 0; border-top: 1px solid var(--v-hair); display: grid; gap: .2em; }
+  .incl li:last-child { padding-bottom: 0; }
+  .incl li b { font-weight: 600; }
+  .incl li span { font-size: var(--v-t-sm); color: var(--v-ink-soft); }
+  @media (max-width: 860px) {
+    .prices { grid-template-columns: 1fr; gap: var(--v-7); }
+    .prices__aside { position: static; }
+    .incl__body { padding: var(--v-4) var(--v-5) var(--v-5); }
+    .plist .name { font-size: var(--v-t-base); font-weight: 600; }
+  }
+  @media (max-width: 520px) {
+    .plist li { grid-template-columns: 1fr; }
+    .plist .price { grid-column: 1; grid-row: auto; }
+  }
+
+  /* ---- тренер: портрет со шторкой, факты ------------------------------------ */
+  .tr { display: grid; grid-template-columns: .72fr 1.28fr; gap: var(--v-9); align-items: center; }
+  .tr__fig { position: relative; aspect-ratio: 3 / 4; border-radius: var(--v-radius); overflow: hidden; box-shadow: var(--v-e2), var(--v-edge); }
+  .tr__fig img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+  .tr__copy { display: grid; gap: var(--v-4); }
+  .tr__copy .v-lede { max-width: 44ch; }
+  .tr__name { font-size: clamp(1.9rem, 1.3rem + 2.2vw, 3.2rem); }
+  .tr__facts { display: grid; grid-template-columns: 1fr 1fr; gap: var(--v-4) var(--v-6); margin-top: var(--v-3); }
+  .tr__facts li { display: grid; gap: .2em; padding-top: var(--v-3); border-top: 1px solid var(--v-hair); }
+  .tr__facts b { font-size: var(--v-t-xs); letter-spacing: var(--v-track-wide); text-transform: uppercase; color: var(--v-ink-soft); font-weight: 600; }
+  .tr__facts span { text-wrap: pretty; }
+  .tr__for { display: grid; gap: var(--v-2); padding: var(--v-5); margin-top: var(--v-2); border-radius: var(--v-radius); background: var(--v-surface); box-shadow: var(--v-e1), var(--v-edge); }
+  .tr__for li { padding: .35em 0; border-top: 1px solid var(--v-hair); text-wrap: pretty; }
+  .tr__for li:first-of-type { border-top: 0; }
+  @media (max-width: 860px) {
+    .tr { grid-template-columns: 1fr; gap: var(--v-6); }
+    .tr__fig { aspect-ratio: 4 / 3; }
+    .tr__fig img { object-position: center 25%; }
+    .tr__facts { grid-template-columns: 1fr; gap: var(--v-3); }
+  }
+
+  /* ---- отзывы с Яндекс.Карт: одна крупная цитата и две малые --------------- */
+  .reviews__head { display: flex; flex-wrap: wrap; gap: var(--v-6); align-items: end; justify-content: space-between; margin-bottom: var(--v-7); }
+  .reviews__rating { display: flex; flex-wrap: wrap; align-items: center; gap: var(--v-3); font-size: var(--v-t-sm); }
+  .reviews__rating a { display: inline-flex; align-items: center; min-height: 44px; }
+  .reviews__num { font-family: var(--v-font-display); font-weight: 600; font-size: var(--v-t-2xl); line-height: 1; }
+  .reviews__stars { --size: 1.1rem; display: inline-block; width: calc(var(--size) * 5); height: var(--size);
+    background: linear-gradient(90deg, var(--v-accent-deep) calc(var(--r, 0) / 5 * 100%), var(--v-hair-strong) 0);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7z'/%3E%3C/svg%3E") 0 0 / var(--size) var(--size) repeat-x;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7z'/%3E%3C/svg%3E") 0 0 / var(--size) var(--size) repeat-x; }
+  .reviews__stars--sm { --size: .8rem; vertical-align: middle; }
+  .reviews__list { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: var(--v-6); align-items: start; }
+  .reviews__item { padding-top: var(--v-5); border-top: 1px solid var(--v-hair); }
+  .reviews__item--big .reviews__text { font-size: var(--v-t-lg); line-height: 1.4; }
+  .reviews__text { text-wrap: pretty; }
+  .reviews__meta { margin-top: var(--v-4); font-size: var(--v-t-sm); color: var(--v-ink-soft); }
+  .reviews__meta b { color: var(--v-ink); font-weight: 600; }
+  .reviews__fact { flex-basis: 100%; font-size: var(--v-t-sm); color: var(--v-ink-soft); }
+  @media (max-width: 860px) { .reviews__list { grid-template-columns: 1fr; } .reviews__head { margin-bottom: var(--v-5); } }
+
+  /* ---- финал: запись на пробную, двое отдыхают после тренировки -------------- */
+  .close { height: 100%; display: grid; grid-template-rows: 1fr auto; padding: clamp(5.5rem, 13vh, 8.5rem) var(--v-gutter) var(--v-6);
+    background: radial-gradient(60rem 40rem at calc(var(--v-mx, .5) * 100%) calc(var(--v-my, .5) * 100%), var(--v-accent-14), transparent 60%); }
+  .close__inner { align-self: center; display: grid; grid-template-columns: 1.2fr .8fr; gap: var(--v-9); align-items: center; padding-bottom: var(--v-7); }
+  .close__inner .v-display { margin-bottom: var(--v-5); }
+  .close__inner .v-lede { max-width: 44ch; }
+  .close__cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--v-4) var(--v-6); margin-top: var(--v-6); }
+  .close__tel { font-family: var(--v-font-display); font-weight: 500; font-size: var(--v-t-lg); text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; color: var(--v-ink); letter-spacing: -.01em; }
+  .close__hint { margin-top: var(--v-4); font-size: var(--v-t-sm); color: var(--v-ink-soft); max-width: 46ch; }
+  .close__meta { display: grid; grid-template-columns: 1fr 1fr; gap: var(--v-3) var(--v-6); color: var(--v-ink-soft); margin-top: var(--v-6); padding-top: var(--v-5); border-top: 1px solid var(--v-hair); font-size: var(--v-t-sm); }
+  .close__meta b { color: var(--v-ink); font-weight: 600; display: block; font-size: var(--v-t-xs); letter-spacing: var(--v-track-wide); text-transform: uppercase; margin-bottom: .2em; }
+  .close__fig { position: relative; aspect-ratio: 3 / 4; max-height: 62svh; justify-self: end; width: min(100%, 24rem); border-radius: var(--v-radius); overflow: hidden; box-shadow: var(--v-e2), var(--v-edge); transform: rotate(2deg); }
+  /* финал появляется по времени, а не от прокрутки: у pin 1.1 ход всего 0,1 экрана, реплика от --v-p выскакивала рывком (правка Евгения 19.09.2026) */
+  .v-page .close__copy[data-v-in] > * { transform: translateY(22px); transition-duration: .9s; }
+  .v-page .close__copy[data-v-in].v-on > * { transform: none; }
+  .v-page .close__fig[data-v-in][data-v-in-self] { transform: translateY(28px) rotate(2deg); transition-duration: 1.1s; transition-delay: .3s; }
+  .v-page .close__fig[data-v-in][data-v-in-self].v-on { transform: rotate(2deg); }
+  @media (prefers-reduced-motion: reduce) { .v-page .close__copy[data-v-in] > * { transform: none; } .v-page .close__fig[data-v-in][data-v-in-self] { opacity: 1; transform: rotate(2deg); transition: none; } }
+  .close__fig img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+  .foot { display: flex; justify-content: space-between; gap: var(--v-4); padding: var(--v-5) 0 0; border-top: 1px solid var(--v-hair); font-size: var(--v-t-xs); color: var(--v-ink-soft); flex-wrap: wrap; }
+  @media (max-width: 860px) {
+    .close { padding: clamp(4.5rem, 11vh, 6rem) var(--v-gutter) calc(var(--v-4) + env(safe-area-inset-bottom)); }
+    .close__inner { grid-template-columns: 1fr; gap: var(--v-5); padding-bottom: var(--v-5); }
+    .close__inner .v-display { font-size: var(--v-t-xl); margin-bottom: var(--v-3); }
+    .close__tel { font-size: var(--v-t-base); }
+    .close__fig { display: none; }
+    .close__meta { margin-top: var(--v-5); padding-top: var(--v-4); gap: var(--v-2) var(--v-4); }
+    .foot__more { display: none; }
+  }
+  @media (max-width: 600px) and (max-height: 760px) { .close__hint { display: none; } .close__meta { grid-template-columns: 1fr 1fr; } }
+
+  /* телефон: подписи и лейблы не мельче 15 px (в конце, чтобы перебить правила компонентов) */
+  @media (max-width: 860px) {
+    .hero__tel, .rows p, .turn__text, .poka__fig figcaption, .first__fig figcaption, .steps p, .first__note, .plist .note, .prices__incl,
+    .incl li span, .incl__fig figcaption, .tr__facts span, .tr__for li, .reviews__meta, .reviews__rating, .reviews__fact, .close__hint, .close__meta, .foot,
+    .v-page .v-label, .tr__facts b, .close__meta b, .ba__legend, .steps__n, .card__cap, .card__cap span { font-size: .95rem; }
+  }
+
+  /* ---- бренд на первом экране: надпись в духе клуба ------------------------ */
+  .hero__mark { display: block; margin-bottom: var(--v-4); }
+  .hero__logo { display: block; width: clamp(8rem, 13vw, 12.5rem); height: auto; }
+  .hero__mark-sub { display: block; margin-top: .8em; font-size: var(--v-t-sm); letter-spacing: .26em; text-transform: uppercase; color: var(--v-ink-soft); }
+  .bar__mark--logo img { display: block; height: 1.9rem; width: auto; }
+  @media (max-width: 700px) { .bar__mark--logo img { height: 1.7rem; } }
+  /* ---- плашка «сейчас открыто» -------------------------------------------- */
+  .hero__pill { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .4em 1.1em; margin-top: var(--v-4);
+    font-size: var(--v-t-sm); color: var(--v-ink-soft); }
+  .open { display: inline-flex; align-items: center; gap: .5em; font-weight: 600; color: var(--v-ink); }
+  .open i { width: .5em; height: .5em; border-radius: 50%; background: var(--v-accent); box-shadow: 0 0 0 3px var(--v-accent-14); }
+  .open[data-open="0"] i { background: var(--v-ink-soft); box-shadow: 0 0 0 3px color-mix(in oklab, var(--v-ink-soft) 16%, transparent); }
+  /* ---- карточка в hero: постановочный кадр поверх зала ---------------------- */
+  .hero__cover { position: absolute; z-index: 3; right: var(--v-gutter); bottom: clamp(3.5rem, 11vh, 7rem);
+    width: min(23vw, 20rem); aspect-ratio: 3 / 4; padding: 10px; border-radius: 12px; transform: rotate(-2deg);
+    background: #fffdf9; border-top: 3px solid var(--v-accent); box-shadow: 0 34px 70px rgb(41 30 24 / .38), var(--v-edge); }
+  .hero__cover::after { content: ""; position: absolute; inset: 0; border-radius: 12px; box-shadow: inset 0 0 0 1px rgb(181 35 31 / .35); pointer-events: none; }
+  .hero__cover img { width: 100%; height: 100%; object-fit: cover; object-position: 60% center; border-radius: 6px; box-shadow: 0 0 0 1px rgb(26 20 16 / .07); }
+  .hero__back { overflow: hidden; }
+  .hero__back img { object-position: left top; }
+  @media (max-width: 980px) { .hero__cover { display: none; } }
+  @media (max-width: 860px) {
+    .hero__pill { display: none; }
+    .hero__tel { display: none; }
+    .hero__col { background: linear-gradient(to bottom, var(--v-canvas) 0%, var(--v-canvas) 45%, transparent 56%); }
+    .hero__back { -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%); mask-image: linear-gradient(to bottom, transparent, #000 8%); }
+  }
+  .v-page .v-btn--ghost { background: color-mix(in oklab, var(--v-canvas) 90%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+  /* ---- линейка фактов ------------------------------------------------------ */
+  .facts { border-top: 2px solid var(--v-accent); margin-top: calc(var(--v-section) * .1); }
+  .facts__list { display: flex; flex-wrap: wrap; gap: var(--v-5) var(--v-8); padding: var(--v-5) 0 0; list-style: none; }
+  .facts__list li { display: grid; gap: .1em; }
+  .facts__list b { font-family: var(--v-font-display); font-weight: 600; font-size: clamp(1.5rem, 1rem + 1.4vw, 2.1rem); line-height: 1; }
+  .facts__list span { font-size: var(--v-t-sm); color: var(--v-ink-soft); }
+  /* ---- смена кадров зала по прокрутке -------------------------------------- */
+  .shots { display: grid; grid-template-columns: .85fr 1.15fr; gap: var(--v-9); align-items: center; min-height: 100svh; align-content: center; }
+  .shots__copy { display: grid; gap: var(--v-4); }
+  .shots__fig { position: relative; aspect-ratio: 4 / 3; border-radius: var(--v-radius); overflow: hidden;
+    background: var(--v-surface); box-shadow: var(--v-e2), var(--v-edge); }
+  .shots__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    clip-path: inset(0 0 0 100%); transition: clip-path .85s var(--v-ease-out), transform .85s var(--v-ease-out); transform: scale(1.04); }
+  .shots__img.is-on { clip-path: inset(0 0 0 0); transform: none; }
+  .shots__cap { position: absolute; left: var(--v-4); right: var(--v-4); bottom: var(--v-4); z-index: 1; font-size: var(--v-t-sm);
+    padding: var(--v-3) var(--v-4); border-radius: calc(var(--v-radius) - 4px);
+    background: color-mix(in oklab, var(--v-surface) 84%, transparent); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  .shots__dots { display: flex; gap: .45rem; margin-top: var(--v-4); }
+  .shots__dots span { width: 2.6rem; height: 3px; border-radius: 2px; background: var(--v-hair-strong); transition: background-color .3s var(--v-ease-out); }
+  .shots__dots span.is-on { background: var(--v-accent); }
+  @media (max-width: 860px) { .shots { grid-template-columns: 1fr; gap: var(--v-6); min-height: auto; } .shots__fig { aspect-ratio: 3 / 2; } }
+  /* ---- конфигуратор абонемента -------------------------------------------- */
+  .calc { display: grid; gap: var(--v-3); padding: var(--v-5); margin-top: var(--v-5);
+    border-radius: var(--v-radius); background: var(--v-surface); box-shadow: var(--v-e2), var(--v-edge); }
+  .calc__group { display: grid; gap: .55rem; }
+  .calc__chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+  .calc__chip { font: inherit; font-size: var(--v-t-sm); padding: .5em .9em; border-radius: 999px; cursor: pointer;
+    color: var(--v-ink); background: transparent; border: 1px solid var(--v-hair-strong);
+    transition: background-color .18s var(--v-ease-out), color .18s var(--v-ease-out), border-color .18s var(--v-ease-out); }
+  .calc__chip.is-on { background: var(--v-accent); border-color: var(--v-accent); color: var(--v-accent-ink); }
+  .calc__out { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3em .8em; margin-top: .3rem; }
+  .calc__out b { font-family: var(--v-font-display); font-weight: 600; font-size: clamp(2rem, 1.4rem + 2vw, 2.9rem); line-height: 1; color: var(--v-accent-deep); }
+  .calc__out span { font-size: var(--v-t-sm); color: var(--v-ink-soft); }
+  .calc__hint { font-size: var(--v-t-sm); color: var(--v-ink-soft); }
+  @media (hover: hover) and (pointer: fine) {
+    .calc__chip:hover:not(.is-on) { border-color: var(--v-accent); color: var(--v-accent-deep); }
+  }
+
+  /* ---- масштаб: спокойная типографика, одна система для обоих сайтов ------ */
+  .v-page .v-display--xl { font-size: clamp(1.6rem, 1rem + 2vw, 2.7rem); line-height: 1.14; }
+  .v-page .v-display--lg { font-size: clamp(1.4rem, .95rem + 1.6vw, 2.1rem); line-height: 1.14; }
+  .v-page .v-display--md { font-size: clamp(1.25rem, .9rem + 1.2vw, 1.8rem); line-height: 1.16; }
+  .hero__copy .v-display { font-size: clamp(1.5rem, 1rem + 1.8vw, 2.6rem); }
+  .hero__copy .v-lede { max-width: 40ch; }
+  .bar { padding: .55rem var(--v-gutter); }
+  .bar__tel { font-size: .95rem; }
+  .bar .v-btn { min-height: 42px; padding: 0 1.1em; font-size: .95rem; }
+  .bar__mark--logo img { height: 1.9rem; }
+  /* блок «с кем работают» без белой карточки */
+  .v-page .tr__for { background: none; box-shadow: none; border-radius: 0; padding: 0; }
+  .v-page .tr__for li { padding: .55rem 0; border-top: 1px solid var(--v-hair); }
+  .v-page .tr__for li:first-child { border-top: 0; padding-top: 0; }
+  .v-page .tr { grid-template-columns: 1fr; }
+  .v-page .tr__copy { max-width: 60rem; }
+
+  /* ---- акт «Тренеры»: текст и цитата, без портретов ----------------------- */
+  .v-page .tr { grid-template-columns: 1.25fr .75fr; align-items: start; gap: var(--v-8); }
+  .v-page .tr__copy { max-width: none; }
+  .tr__quote { display: grid; gap: var(--v-3); padding-top: var(--v-4); border-top: 1px solid var(--v-hair-strong); }
+  .tr__quote p { font-size: var(--v-t-lg); line-height: 1.4; text-wrap: pretty; }
+  .tr__quote figcaption { font-size: var(--v-t-sm); color: var(--v-ink-soft); }
+  .tr__side { display: grid; gap: var(--v-5); align-content: start; }
+  @media (max-width: 860px) { .v-page .tr { grid-template-columns: 1fr; gap: var(--v-6); } }
+
+  /* ---- первый экран: текст от шапки вниз, спокойный кегль ------------------ */
+  .v-page .hero__copy { top: clamp(4.6rem, 22vh, 15rem); bottom: auto; max-width: min(46rem, 56vw); }
+  .hero__copy .v-display { font-size: clamp(1.5rem, 1rem + 1.8vw, 2.6rem); }
+  .hero__copy .v-lede { font-size: clamp(.95rem, .9rem + .3vw, 1.1rem); max-width: 42ch; margin-top: var(--v-4); }
+  .hero__mark { margin-bottom: var(--v-3); }
+  .hero__mark-sub { margin-top: .5em; font-size: .78rem; letter-spacing: .2em; }
+  .hero__cta { margin-top: var(--v-5); }
+  @media (max-height: 820px) {
+    .hero__cover { width: min(18vw, 14rem); }
+    .hero__card { width: min(19vw, 15rem); }
+    .v-page .hero__copy { top: 4.4rem; }
+  }
+  /* ---- отзывы: одинаковый кегль у всех цитат ------------------------------ */
+  .reviews__text, .reviews__item--big .reviews__text { font-size: var(--v-t-base); line-height: 1.55; }
+
+  /* ---- общий масштаб страницы: меньше кегль и воздух во всех блоках -------- */
+  .v-page {
+    --v-t-xs:   clamp(.72rem, .70rem + .12vw, .78rem);
+    --v-t-sm:   clamp(.82rem, .80rem + .15vw, .90rem);
+    --v-t-base: clamp(.94rem, .92rem + .18vw, 1.02rem);
+    --v-t-lg:   clamp(1.05rem, .98rem + .35vw, 1.25rem);
+    --v-t-xl:   clamp(1.30rem, 1.15rem + .80vw, 1.70rem);
+    --v-t-2xl:  clamp(1.55rem, 1.20rem + 1.30vw, 2.30rem);
+    --v-t-3xl:  clamp(1.90rem, 1.30rem + 1.80vw, 2.90rem);
+    --v-t-4xl:  clamp(2.30rem, 1.40rem + 2.40vw, 3.60rem);
+    --v-section: clamp(2rem, 3.6vw, 3.25rem);
+  }
+  .v-page .v-display--xl { font-size: clamp(1.45rem, .95rem + 1.65vw, 2.35rem); line-height: 1.16; }
+  .v-page .v-display--lg { font-size: clamp(1.25rem, .95rem + 1.25vw, 1.80rem); line-height: 1.18; }
+  .v-page .v-display--md { font-size: clamp(1.10rem, .90rem + 0.95vw, 1.50rem); line-height: 1.2; }
+  .v-page .tr__name { font-size: clamp(1.25rem, .95rem + 1.25vw, 1.80rem); }
+  .v-page .ba__copy .v-display--md { font-size: clamp(1.10rem, .90rem + 0.95vw, 1.50rem); }
+  .hero__copy .v-display { font-size: clamp(1.45rem, 1rem + 1.65vw, 2.40rem); }
+  .facts__list b { font-size: clamp(1.25rem, 1rem + .9vw, 1.65rem); }
+  .calc__out b { font-size: clamp(1.5rem, 1.15rem + 1.3vw, 2.1rem); }
+  .steps__n { width: 2.2rem; height: 2.2rem; }
+  .plist .name { font-size: var(--v-t-base); }
+  .v-page .v-btn { font-size: .92rem; }
+  @media (max-width: 860px) {
+    .v-page { --v-section: clamp(1.8rem, 5vw, 2.4rem); }
+    .v-page .hero__copy { top: 4.6rem; }
+    .hero__copy .v-display { font-size: clamp(1.35rem, 1rem + 2.2vw, 1.9rem); }
+    .hero__cta { gap: .45rem .5rem; }
+    .hero__cta .v-btn { padding: 0 .95em; font-size: .88rem; min-height: 40px; }
+    .hero__mark-sub { font-size: .7rem; letter-spacing: .12em; }
+  }
+
+  /* ---- шапка: фон и линия сразу, без ожидания прокрутки ------------------- */
+  .bar, .bar.is-scrolled {
+    background: color-mix(in oklab, var(--v-canvas) 90%, transparent);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 1px 0 var(--v-hair);
+  }
+  /* ---- финал: блок и подвал всегда в одном экране ------------------------- */
+  .v-page .close {
+    height: 100svh;
+    min-height: 0;
+    padding-block: clamp(3.5rem, 8vh, 5.5rem) var(--v-4);
+    overflow: hidden;
+  }
+  .v-page .close__inner { align-self: center; min-height: 0; padding-bottom: var(--v-5); }
+  .v-page .close__fig { max-height: 52svh; }
+  @media (max-height: 840px) {
+    .v-page .close__fig { max-height: 38svh; width: min(100%, 17rem); }
+    .v-page .close__hint { display: none; }
+    .v-page .close__meta { margin-top: var(--v-4); padding-top: var(--v-3); }
+    .v-page .close__inner { padding-bottom: var(--v-3); }
+  }
+
+</style>
+<style id="fix-cinema">
+/* Патч-слой для каркаса «Кино» (vibe-sait, templates/<ниша>).
+   Ставится после стилей сайта и лечит повторяющиеся дефекты каркаса:
+   1) масштаб типографики и отступов (иначе на 100% всё крупно и рыхло);
+   2) шапка: фон, блюр и линия сразу, а не только после прокрутки;
+   3) первый экран: текст ставится от шапки вниз, не уезжает под неё и не прыгает;
+   4) финал: блок ровно в экран, подвал виден без уменьшения масштаба;
+   5) отзывы: все цитаты одного кегля (первая карточка просто шире).
+   Ничего не перекрашивает: цвета и шрифты остаются сайта. */
+
+/* ---- 1. общий масштаб ---------------------------------------------------- */
+.v-page {
+  --v-t-xs:   clamp(.72rem, .70rem + .12vw, .78rem);
+  --v-t-sm:   clamp(.82rem, .80rem + .15vw, .90rem);
+  --v-t-base: clamp(.94rem, .92rem + .18vw, 1.02rem);
+  --v-t-lg:   clamp(1.05rem, .98rem + .35vw, 1.25rem);
+  --v-t-xl:   clamp(1.30rem, 1.15rem + .80vw, 1.70rem);
+  --v-t-2xl:  clamp(1.55rem, 1.20rem + 1.30vw, 2.30rem);
+  --v-t-3xl:  clamp(1.90rem, 1.30rem + 1.80vw, 2.90rem);
+  --v-t-4xl:  clamp(2.30rem, 1.40rem + 2.40vw, 3.60rem);
+  --v-section: clamp(2rem, 3.6vw, 3.25rem);
+}
+.v-page .v-display--xl { font-size: clamp(1.45rem, .95rem + 1.65vw, 2.35rem); line-height: 1.16; }
+.v-page .v-display--lg { font-size: clamp(1.25rem, .95rem + 1.25vw, 1.80rem); line-height: 1.18; }
+.v-page .v-display--md { font-size: clamp(1.10rem, .90rem + 0.95vw, 1.50rem); line-height: 1.2; }
+.v-page .v-btn { font-size: .92rem; }
+
+/* ---- 2. шапка одинаковая до и после прокрутки --------------------------- */
+.bar, .bar.is-scrolled {
+  background: color-mix(in oklab, var(--v-canvas) 90%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 1px 0 var(--v-hair);
+  padding-block: .55rem;
+}
+.bar__mark--logo img { height: 1.9rem; width: auto; }
+.bar__tel { font-size: .95rem; }
+.bar .v-btn { min-height: 42px; padding: 0 1.1em; font-size: .95rem; }
+
+/* ---- 3. первый экран ---------------------------------------------------- */
+.v-page .hero__copy { top: clamp(4.6rem, 22vh, 15rem); bottom: auto; max-width: min(46rem, 56vw); }
+.hero__copy .v-display { font-size: clamp(1.45rem, 1rem + 1.65vw, 2.40rem); }
+.hero__copy .v-lede { font-size: clamp(.95rem, .9rem + .3vw, 1.1rem); max-width: 42ch; margin-top: var(--v-4); }
+.hero__mark { margin-bottom: var(--v-3); }
+.hero__mark-sub { margin-top: .5em; font-size: .78rem; letter-spacing: .2em; }
+.hero__cta { margin-top: var(--v-5); }
+@media (max-height: 820px) {
+  .hero__cover { width: min(18vw, 14rem); }
+  .hero__card { width: min(19vw, 15rem); }
+  .v-page .hero__copy { top: 4.4rem; }
+}
+
+/* ---- 4. финал и подвал -------------------------------------------------- */
+.v-page .close {
+  height: 100svh;
+  min-height: 0;
+  padding-block: clamp(3.5rem, 8vh, 5.5rem) var(--v-4);
+  overflow: hidden;
+}
+.v-page .close__inner { align-self: center; min-height: 0; padding-bottom: var(--v-5); }
+.v-page .close__fig { max-height: 52svh; }
+@media (max-height: 840px) {
+  .v-page .close__fig { max-height: 38svh; width: min(100%, 17rem); }
+  .v-page .close__hint { display: none; }
+  .v-page .close__meta { margin-top: var(--v-4); padding-top: var(--v-3); }
+  .v-page .close__inner { padding-bottom: var(--v-3); }
+}
+
+/* ---- 5. отзывы: одинаковый кегль --------------------------------------- */
+.reviews__text, .reviews__item--big .reviews__text { font-size: var(--v-t-base); line-height: 1.55; }
+
+/* ---- 6. телефон --------------------------------------------------------- */
+@media (max-width: 860px) {
+  .v-page { --v-section: clamp(1.8rem, 5vw, 2.4rem); }
+  .v-page .hero__copy { top: 4.6rem; }
+  .hero__copy .v-display { font-size: clamp(1.35rem, 1rem + 2.2vw, 1.9rem); }
+  .hero__cta { gap: .45rem .5rem; }
+  .hero__cta .v-btn { padding: 0 .95em; font-size: .88rem; min-height: 40px; }
+  .hero__mark-sub { font-size: .7rem; letter-spacing: .12em; }
+}
+
+</style>
+</head>
+<body>
+<div class="v-page">
+  <span data-v-progress></span>
+
+  <header class="bar">
+    <a class="bar__mark bar__mark--logo" href="#top"><img src="assets/logo-mark.webp" alt="Богатырь, old school gym" width="520" height="130"></a>
+    <nav class="bar__right" aria-label="Быстрые ссылки">
+      <a class="bar__tel" href="tel:+79954811710">+7 995 481-17-10</a>
+      <a class="v-btn" href="tel:+79954811710">Записаться</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- 1 · УЗНАВАНИЕ. Первый экран «шторка»: пустой зал, дальше по скроллу входит тренер с клиентом -->
+    <section id="top" data-v-act="pin" data-v-span="1.7" data-v-drift="#f1ece2" aria-label="Богатырь: тренажёрный зал в центре Перми">
+      <div data-v-stage>
+        <div class="v-layer hero__back" data-v-parallax="-0.45">
+          <picture>
+            <source media="(max-width: 860px)" srcset="assets/hero-m.webp">
+            <img src="assets/hero.webp" alt="" width="1600" height="900" fetchpriority="high">
+          </picture>
+        </div>
+        <div class="hero__col" aria-hidden="true"></div>
+
+        <figure class="hero__cover" data-v-rise="0">
+          <img src="assets/duo.webp" srcset="assets/duo-600.webp 600w, assets/duo.webp 1000w" sizes="(max-width: 980px) 0px, 21rem" alt="Мужчина и женщина с гантелями в зале Богатырь" width="1000" height="1333" fetchpriority="high" decoding="async">
+        </figure>
+
+        <div class="v-copy v-copy--lead hero__copy" data-v-cue="0 0.9 0 0.1">
+          <span class="hero__mark"><img class="hero__logo" src="assets/logo.webp" alt="Богатырь, old school gym" width="900" height="369"><span class="hero__mark-sub">Пермь · с 2003 года</span></span>
+          <h1 class="v-display v-display--xl" data-v-kinetic="lines">Тренажёрный зал в центре Перми – без очередей к тренажёрам</h1>
+          <p class="v-lede">Камерный зал на Петропавловской, 81: сауна и душ, тренеры рядом. Пробное 350 ₽, разовое 600 ₽.</p>
+          <div class="hero__cta">
+            <a class="v-btn" href="tel:+79954811710">Записаться</a>
+            <a class="v-btn v-btn--ghost" href="tel:+79954811710">Позвонить</a>
+          </div>
+          <p class="hero__pill">
+            <span class="open" data-open-state><i aria-hidden="true"></i><span>Сейчас открыто</span></span>
+            <span>07:00 – 22:00 без выходных</span>
+            <span>Пробное 350 ₽</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="v-wrap">
+      <div class="facts">
+        <ul class="facts__list" data-v-in data-v-stagger="60">
+          <li><b>4,9</b><span>рейтинг на 2ГИС, 148 оценок</span></li>
+          <li><b>123</b><span>отзыва гостей</span></li>
+          <li><b>2003</b><span>год, с которого работает зал</span></li>
+          <li><b>07–22</b><span>открыто каждый день</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 2 · ЦЕНА БЕЗДЕЙСТВИЯ и ПОВОРОТ -->
+    <section class="v-section v-section--tight" data-v-act="flow" data-v-drift="#e9e1d2" id="poka" aria-label="Почему в большой зал не хочется идти">
+      <div class="v-wrap">
+        <div class="poka__head" data-v-in data-v-stagger="70">
+          <span class="v-label v-label--accent">Знакомо?</span>
+          <h2 class="v-display v-display--lg">В зал идёшь не тренироваться, а ждать тренажёр</h2>
+        </div>
+        <div class="poka__grid">
+          <ul class="rows" data-v-in data-v-stagger="80">
+            <li><h3>Стойка занята, время идёт</h3><p>В час пик к тренажёру очередь: ждёшь, пока освободится, и уходишь, не доделав подход. Дорога домой заняла больше, чем тренировка.</p></li>
+            <li><h3>Подсказать некому</h3><p>Делаешь по видео из интернета и надеешься, что спина выдержит. Тренер в зале есть, но он с теми, кто купил пакет.</p></li>
+            <li><h3>Абонемент лежит</h3><p>Дорога, толпа, музыка в уши. Проще не поехать, и деньги за месяц тихо сгорают.</p></li>
+          </ul>
+          <div class="turn" data-v-in data-v-in-self>
+            <span class="v-label v-label--accent">Как у нас</span>
+            <p class="turn__text">«Богатырь» работает с 2003 года как камерный зал: <b>4,9 на 2ГИС по 148 оценкам</b>, и в отзывах чаще всего повторяют «народу немного» и «очередей нет». Пробное посещение стоит 350 ₽, разовое 600 ₽: сначала посмотрите зал, потом решайте про абонемент.</p>
+          </div>
+        </div>
+        <figure class="poka__fig" data-v-reveal="left" data-v-reveal-at="0.4 0.68">
+          <img src="assets/pain.webp" alt="Тренажёрный зал клуба Богатырь на Петропавловской" width="1600" height="700" loading="lazy" decoding="async">
+          <figcaption>Зал на Петропавловской, 81: тренажёров много, людей в час пик немного</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 3 · ДОКАЗАТЕЛЬСТВО: как проходит пробное посещение -->
+    <section class="v-section" data-v-act="flow" data-v-drift="#f1ece2" id="pervaya" aria-label="Как проходит пробное посещение">
+      <div class="v-wrap first">
+        <figure class="first__fig" data-v-in data-v-in-self>
+          <div data-v-parallax="0.3">
+            <img src="assets/akt3.webp" alt="Стойка с гантелями в зале Богатырь" width="820" height="1093" loading="lazy" decoding="async">
+          </div>
+          <figcaption>Тренеры клуба: подскажут, покажут, поправят</figcaption>
+        </figure>
+        <div class="first__copy" data-v-in data-v-stagger="70">
+          <span class="v-label v-label--accent">Пробное посещение</span>
+          <h2 class="v-display v-display--lg">Первый раз: без абонемента и без обязательств</h2>
+          <p class="v-lede">350 ₽ за визит. С собой форма, кроссовки и вода, остальное в зале есть.</p>
+          <ol class="steps">
+            <li><span class="steps__n">1</span><div><h3>Договариваемся о времени</h3><p>Звонок или сообщение в мессенджер: зал открыт с 7:00 до 22:00 каждый день, прийти можно утром, днём или вечером.</p></div></li>
+            <li><span class="steps__n">2</span><div><h3>Показываем зал</h3><p>Раздевалка, сауна, душ, фитнес-бар с кофе. Смотрите, где что стоит, прежде чем платить.</p></div></li>
+            <li><span class="steps__n">3</span><div><h3>Тренажёры и техника</h3><p>Тренер покажет, как настроить тренажёр под рост и с чего начать. В отзывах пишут и про «помогли подобрать тренера по запросу».</p></div></li>
+            <li><span class="steps__n">4</span><div><h3>Решаете про абонемент</h3><p>Полный день, утро, день или вечер. Цены и сроки назовём заранее, в том числе скидку 20% тем, кто тренируется с тренером.</p></div></li>
+          </ol>
+          <p class="first__note"><b>Пробное 350 ₽, разовое 600 ₽, неделя фитнеса 1 000 ₽.</b> Можно ходить без абонемента, пока не решите.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · ДОКАЗАТЕЛЬСТВО: зал в трёх кадрах, кадры сменяются по прокрутке -->
+    <section id="zal" data-v-act="pin" data-v-span="1.6" data-v-drift="#e9e1d2" aria-label="Зал: три кадра">
+      <div data-v-stage>
+        <div class="v-wrap shots">
+          <div class="shots__copy" data-v-in data-v-stagger="80">
+            <span class="v-label v-label--accent">Зал</span>
+            <h2 class="v-display v-display--md">Что внутри: три кадра без ретуши</h2>
+            <p class="v-body v-soft">Тренажёрный зал, зал групповых программ и кардиозона с панорамными окнами. Фотографии с карточки клуба: так зал выглядит в жизни, а не на рекламном постере.</p>
+            <p class="v-body v-soft">Прокрутите: кадр сменится.</p>
+            <div class="shots__dots" aria-hidden="true"><span class="is-on"></span><span></span><span></span></div>
+          </div>
+          <figure class="shots__fig">
+            <img class="shots__img is-on" src="assets/zal-1.webp" alt="Тренажёрный зал клуба Богатырь: блочные тренажёры и стойки" width="1280" height="960" loading="lazy" decoding="async">
+            <img class="shots__img" src="assets/zal-2.webp" alt="Зал групповых программ с зеркалами и ковриками" width="1280" height="960" loading="lazy" decoding="async">
+            <img class="shots__img" src="assets/zal-3.webp" alt="Кардиозона с панорамными окнами" width="1280" height="960" loading="lazy" decoding="async">
+            <figcaption class="shots__cap" data-shots-cap>Тренажёрный зал: блочные тренажёры, стойки, свободные веса</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · ВЫБОР: цены и конфигуратор абонемента (цифры с фото прайса на карточке 2ГИС) -->
+    <section class="v-section v-section--tight" data-v-act="flow" data-v-drift="#f1ece2" id="formaty" aria-label="Цены и абонементы">
+      <div class="v-wrap prices">
+        <div class="v-stack" data-v-in data-v-stagger="60">
+          <span class="v-label v-label--accent">Цены</span>
+          <h2 class="v-display v-display--lg">Цены: от разового до года</h2>
+          <p class="v-body v-soft">Цены с прайс-листа клуба. Абонемент на полный день и на неполный, от месяца до года. Скидка 20% тем, кто тренируется персонально с тренером.</p>
+
+          <div class="calc" data-calc aria-live="polite">
+            <div class="calc__group">
+              <span class="v-label">Когда ходите</span>
+              <div class="calc__chips" role="group" aria-label="Время посещения">
+                <button type="button" class="calc__chip is-on" data-time="full">Полный день</button>
+                <button type="button" class="calc__chip" data-time="utro">Утро 7:00–13:00</button>
+                <button type="button" class="calc__chip" data-time="den">День 13:00–17:00</button>
+                <button type="button" class="calc__chip" data-time="vecher">Вечер 17:00–23:00</button>
+              </div>
+            </div>
+            <div class="calc__group">
+              <span class="v-label">На сколько</span>
+              <div class="calc__chips" role="group" aria-label="Срок абонемента">
+                <button type="button" class="calc__chip is-on" data-term="1">1 месяц</button>
+                <button type="button" class="calc__chip" data-term="3">3 месяца</button>
+                <button type="button" class="calc__chip" data-term="6">6 месяцев</button>
+                <button type="button" class="calc__chip" data-term="10">10 месяцев</button>
+                <button type="button" class="calc__chip" data-term="12">12 месяцев</button>
+              </div>
+            </div>
+            <p class="calc__out"><b data-calc-price>4 000 ₽</b><span data-calc-note>за 1 месяц, безлимит</span></p>
+            <p class="calc__hint">Цена из прайса клуба. Условия заморозки и срок действия уточняйте при записи.</p>
+          </div>
+
+          <ul class="plist">
+            <li class="is-trial"><span class="name">Пробное посещение</span><span class="note">знакомство с залом и тренером, по записи</span><span class="price v-nums">350 ₽</span></li>
+            <li><span class="name">Разовое посещение</span><span class="note">один визит, без абонемента</span><span class="price v-nums">600 ₽</span></li>
+            <li><span class="name">Неделя фитнеса</span><span class="note">семь дней, чтобы попробовать режим</span><span class="price v-nums">1 000 ₽</span></li>
+            <li><span class="name">Школьный и студенческий</span><span class="note">1 месяц, полный день, по документу</span><span class="price v-nums">2 000 ₽</span></li>
+            <li><span class="name">Детский фитнес</span><span class="note">1 месяц</span><span class="price v-nums">2 500 ₽</span></li>
+            <li><span class="name">Персональная тренировка</span><span class="note">1 занятие с тренером</span><span class="price v-nums">2 500 ₽</span></li>
+          </ul>
+          <p class="prices__incl"><b>Разовое и пробное не привязывают к абонементу.</b> Скидка 20% для клиентов, которые тренируются персонально с тренером.</p>
+        </div>
+        <aside class="prices__aside" data-v-in data-v-in-self>
+          <div class="incl" data-v-tilt="4">
+            <figure class="incl__fig">
+              <img src="assets/incl.webp" alt="Тренажёры и скамья в зале Богатырь" width="1000" height="667" loading="lazy" decoding="async">
+              <figcaption>Зал · Петропавловская, 81</figcaption>
+            </figure>
+            <div class="incl__body">
+              <span class="v-label v-label--accent">Что есть в зале</span>
+              <ul>
+                <li><b>Сауна и душ</b><span>В раздевалке, после тренировки. Гости пишут про это в отзывах чаще всего.</span></li>
+                <li><b>Фитнес-бар с кофе</b><span>Кофе и батончик после тренировки, на входе.</span></li>
+                <li><b>Бесплатная парковка</b><span>У клуба, в центре города.</span></li>
+                <li><b>Скидка 20% с тренером</b><span>Для тех, кто тренируется персонально.</span></li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 6 · ДОВЕРИЕ: тренеры (имена только из отзывов, фото без подписи «это имя») -->
+    <section class="v-section v-section--tight" data-v-act="flow" data-v-drift="#e9e1d2" id="trener" aria-label="Тренеры клуба">
+      <div class="v-wrap tr">
+        <div class="tr__copy" data-v-in data-v-stagger="70">
+          <span class="v-label v-label--accent">Тренеры</span>
+          <h2 class="v-display v-display--lg tr__name">Тренеры, которых называют по имени</h2>
+          <p class="v-lede">«Рядом всю тренировку» здесь значит буквально: считают повторы, поправляют технику, меняют вес, когда пора. Имена взяты из отзывов гостей.</p>
+          <ul class="tr__facts">
+            <li><b>Виталина</b><span>Персональные и групповые, по отзывам тренирует и онлайн в командировках</span></li>
+            <li><b>Сергей</b><span>Тренировки и рекомендации по питанию</span></li>
+            <li><b>Администратор</b><span>Тимур, его вспоминают в отзывах отдельно</span></li>
+            <li><b>Форматы</b><span>Персональные и групповые, в зале и онлайн</span></li>
+          </ul>
+        </div>          <div class="tr__side">
+<figure class="tr__quote" data-v-in data-v-in-self>
+            <p>«Зал просто отличный, дружелюбная атмосфера, все друг другу помогают, здороваются. Тренер Сергей классно выстраивает тренировки, дает рекомендации по питанию.»</p>
+            <figcaption>Диана Никитина · 15 октября 2026, 2ГИС</figcaption>
+          </figure>
+          <ul class="tr__for">
+            <li class="v-label v-label--accent">С кем работают</li>
+            <li>Новичкам: показать тренажёры и технику с нуля</li>
+            <li>Тем, кто вернулся после перерыва и боится перегруза</li>
+            <li>Тем, кому нужен план, а не «делай как я»</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 7 · ДОВЕРИЕ: отзывы с 2ГИС, дословно -->
+    <section class="v-section v-section--tight" data-v-act="flow" data-v-drift="#f1ece2" id="otzyvy" aria-label="Отзывы на 2ГИС">
+      <div class="v-wrap reviews">
+        <div class="reviews__head" data-v-in data-v-stagger="60">
+          <h2 class="v-display v-display--md">Что пишут на 2ГИС</h2>
+          <div class="reviews__rating">
+            <span class="reviews__num v-nums">4,9</span>
+            <span class="reviews__stars" style="--r: 4.9" role="img" aria-label="рейтинг 4,9 из 5"></span>
+            <span class="v-soft">123 отзыва</span>
+            <a href="https://2gis.ru/perm/firm/2252328094665767" target="_blank" rel="noopener">Читать все отзывы на 2ГИС</a>
+          </div>
+          <p class="reviews__fact">Отзывы скопированы с карточки на 2ГИС без правок: имена и даты настоящие.</p>
+        </div>
+        <ul class="reviews__list" data-v-in data-v-stagger="90">
+          <li class="reviews__item reviews__item--big">
+            <p class="reviews__text">«Зал уютный, чистый, раздевалки удобные. Есть сауна, душ. Вежливый персонал. Помогли подобрать тренера по запросу. В итоге очень понравился индивидуальный подход тренера Виталины. Это не первый тренажерный зал в моей практике, и я остановлю свой выбор именно здесь.»</p>
+            <p class="reviews__meta"><b>Алена Атланова</b> · 30 декабря 2025 · <span class="reviews__stars reviews__stars--sm" style="--r: 5" role="img" aria-label="оценка 5 из 5"></span></p>
+          </li>
+          <li class="reviews__item">
+            <p class="reviews__text">«Хороший зал, чисто, комфортно, все вежливые. В самом центре города, добираться удобно. Ходим с мужем, ему тоже нравится. Народу немного, заниматься комфортно.»</p>
+            <p class="reviews__meta"><b>Alina</b> · 24 ноября 2025 · <span class="reviews__stars reviews__stars--sm" style="--r: 5" role="img" aria-label="оценка 5 из 5"></span></p>
+          </li>
+          <li class="reviews__item">
+            <p class="reviews__text">«Занимаюсь больше трех лет, отличный зал, немного народу и хорошее расположение.»</p>
+            <p class="reviews__meta"><b>Дмитрий Казаков</b> · 18 февраля 2026 · <span class="reviews__stars reviews__stars--sm" style="--r: 5" role="img" aria-label="оценка 5 из 5"></span></p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 8 · ДЕЙСТВИЕ -->
+    <section data-v-act="pin" data-v-span="1.1" data-v-drift="#e9e1d2" id="zapis" aria-label="Записаться на пробное посещение">
+      <div data-v-stage>
+        <div class="close" data-v-spotlight>
+          <div class="close__inner">
+            <div class="close__copy" data-v-in data-v-stagger="110">
+              <h2 class="v-display v-display--lg">Запишитесь на пробное – и приходите как есть</h2>
+              <p class="v-lede">Скажите, когда удобно: зал открыт с 7:00 до 22:00 каждый день. На пробном покажем зал, сауну и тренажёры.</p>
+              <div class="close__cta">
+                <a class="v-btn" href="tel:+79954811710" data-v-magnet="0.22" data-v-rise="0">Записаться</a>
+                <a class="close__tel" href="tel:+79954811710">+7 995 481-17-10</a>
+              </div>
+              <p class="close__hint">С собой: форма, кроссовки, вода. Опыт и «форма» не нужны, с этого и начинаем.</p>
+              <div class="close__meta">
+                <span><b>Часы работы</b>07:00 – 22:00, каждый день</span>
+                <span><b>Пробное посещение</b>350 ₽, по записи</span>
+                <span><b>Адрес</b>Петропавловская, 81, Пермь</span>
+                <span><b>Связь</b>Звонок, Telegram, ВКонтакте</span>
+              </div>
+            </div>
+            <figure class="close__fig" data-v-in data-v-in-self>
+              <img src="assets/bar.webp" alt="Зона ресепшена и бар в клубе Богатырь" width="820" height="1093" loading="lazy" decoding="async">
+            </figure>
+          </div>
+          <footer class="foot">
+            <span>Богатырь · Пермь</span>
+            <span>Петропавловская, 81 · 07:00 – 22:00</span>
+            <span class="foot__more">Тренажёрный зал, групповые программы, сауна. Old school gym с 2003 года</span>
+          </footer>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="vibe.js"></script>
+<script>
+  if (window.matchMedia('(max-width: 860px)').matches) {
+    document.getElementById('top').setAttribute('data-v-span', '1.4');
+    document.getElementById('zal').setAttribute('data-v-span', '1.5');
+  }
+  Vibe.mount(document.querySelector('.v-page'));
+
+  // шапка: подложка после 40 px прокрутки
+  (function () {
+    var bar = document.querySelector('.bar'), on = null;
+    function tick() { var s = window.scrollY > 40; if (s !== on) { on = s; bar.classList.toggle('is-scrolled', s); } }
+    window.addEventListener('scroll', tick, { passive: true }); tick();
+  })();
+
+  // «сейчас открыто»: 07:00–22:00 каждый день, время местное
+  (function () {
+    var el = document.querySelector('[data-open-state]');
+    if (!el) return;
+    var txt = el.querySelector('span');
+    function tick() {
+      var d = new Date(), m = d.getHours() * 60 + d.getMinutes(), open = m >= 420 && m < 1320;
+      el.setAttribute('data-open', open ? '1' : '0');
+      txt.textContent = open ? 'Сейчас открыто' : 'Сейчас закрыто';
+    }
+    tick(); setInterval(tick, 60000);
+  })();
+
+  // смена кадров зала: кадр выбирается по --v-p акта #zal
+  (function () {
+    var act = document.getElementById('zal');
+    var imgs = act.querySelectorAll('.shots__img');
+    var caps = [
+      'Тренажёрный зал: блочные тренажёры, стойки, свободные веса',
+      'Зал групповых программ: зеркала, коврики, степ-платформы',
+      'Кардиозона: дорожки, эллипсы, панорамные окна на город'
+    ];
+    var cap = act.querySelector('[data-shots-cap]');
+    var dots = act.querySelectorAll('.shots__dots span');
+    var cur = -1, live = false;
+    function set(i) {
+      if (i === cur) return;
+      cur = i;
+      imgs.forEach(function (im, k) { im.classList.toggle('is-on', k === i); });
+      dots.forEach(function (d, k) { d.classList.toggle('is-on', k === i); });
+      if (cap) cap.textContent = caps[i];
+    }
+    function tick() {
+      var p = parseFloat(getComputedStyle(act).getPropertyValue('--v-p')) || 0;
+      set(Math.max(0, Math.min(2, Math.floor(p * 3))));
+      if (live) requestAnimationFrame(tick);
+    }
+    new IntersectionObserver(function (es) { live = es[0].isIntersecting; if (live) tick(); }).observe(act);
+    set(0); tick();
+  })();
+
+  // конфигуратор абонемента: цифры с прайса клуба
+  (function () {
+    var root = document.querySelector('[data-calc]');
+    if (!root) return;
+    var P = {
+      full:   { 1: 4000, 3: 8500, 6: 16000, 10: 22000, 12: 28800 },
+      utro:   { 1: 3500, 3: 7000, 6: 13200, 10: 18200, 12: 23900 },
+      den:    { 1: 2700, 3: 6300, 6: 12500, 10: 17500, 12: 23000 },
+      vecher: { 1: 3500, 3: 7000, 6: 13200, 10: 18200, 12: 23900 }
+    };
+    var NAME = { full: 'полный день', utro: 'утро 7:00–13:00', den: 'день 13:00–17:00', vecher: 'вечер 17:00–23:00' };
+    var time = 'full', term = 1;
+    var price = root.querySelector('[data-calc-price]');
+    var note = root.querySelector('[data-calc-note]');
+    function fmt(n) { return String(n).replace(/B(?=(d{3})+(?!d))/g, ' '); }
+    function draw() {
+      var p = P[time][term];
+      price.textContent = fmt(p) + ' ₽';
+      var months = term === 1 ? 'за 1 месяц' : 'за ' + term + ' месяцев';
+      note.textContent = months + ', ' + NAME[time] + (term > 1 ? ' · около ' + fmt(Math.round(p / term)) + ' ₽ в месяц' : '');
+    }
+    root.addEventListener('click', function (e) {
+      var b = e.target.closest('.calc__chip');
+      if (!b) return;
+      if (b.dataset.time) { time = b.dataset.time; root.querySelectorAll('[data-time]').forEach(function (x) { x.classList.toggle('is-on', x === b); }); }
+      if (b.dataset.term) { term = +b.dataset.term; root.querySelectorAll('[data-term]').forEach(function (x) { x.classList.toggle('is-on', x === b); }); }
+      draw();
+    });
+    draw();
+  })();
+</script>
+</body>
+</html>
